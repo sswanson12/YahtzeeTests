@@ -28,21 +28,21 @@ public class YahtzeeGame
             return "Yahtzee";
         }
 
-        /*if (IsFourOfAKind(dice))
+        if (IsFourOfAKind(dice))
         {
             return "Four of a kind";
+        }
+                
+        if (IsFullHouse(dice))
+        {
+            return "Full House";
         }
         
         if (IsThreeOfAKind(dice))
         {
             return "Three of a kind";
         }
-        
-        if (IsFullHouse(dice))
-        {
-            return "Full House";
-        }
-        
+
         if (IsTwoPair(dice))
         {
             return "Two Pair";
@@ -56,7 +56,7 @@ public class YahtzeeGame
         if (IsOneOfAKind(dice))
         {
             return "One of a kind";
-        }*/
+        }
 
         throw new InvalidDataException("Couldn't Rank Dice");
     }
@@ -68,19 +68,29 @@ public class YahtzeeGame
 
     private bool IsFourOfAKind(Die[] dice)
     {
-        throw new NotImplementedException();
-    }
-    
-    private bool IsThreeOfAKind(Die[] dice)
-    {
-        throw new NotImplementedException();
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+
+        return matchingList.Count >= 4;
     }
     
     private bool IsFullHouse(Die[] dice)
     {
-        throw new NotImplementedException();
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+
+        var otherList = dice.ToList().Except(matchingList).ToList();
+
+        return matchingList.Count == 3 && otherList.All(die => die.CurrentFace.Equals(otherList[0].CurrentFace));
     }
     
+    private bool IsThreeOfAKind(Die[] dice)
+    {
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+
+        var otherList = dice.ToList().Except(matchingList).ToList();
+
+        return matchingList.Count == 3 && !otherList.All(die => die.CurrentFace.Equals(otherList[0].CurrentFace));
+    }
+
     private bool IsTwoPair(Die[] dice)
     {
         throw new NotImplementedException();
