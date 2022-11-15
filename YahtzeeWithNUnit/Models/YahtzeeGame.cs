@@ -45,12 +45,12 @@ public class YahtzeeGame
 
         if (IsTwoPair(dice))
         {
-            return "Two Pair";
+            return "Two pair";
         }
         
         if (IsOnePair(dice))
         {
-            return "One Pair";
+            return "One pair";
         }
         
         if (IsOneOfAKind(dice))
@@ -93,16 +93,25 @@ public class YahtzeeGame
 
     private bool IsTwoPair(Die[] dice)
     {
-        throw new NotImplementedException();
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+
+        var otherMatchingList = dice.Except(matchingList)
+            .Where(die => die.CurrentFace.Equals(dice.Except(matchingList).ToList()[0].CurrentFace)).ToList();
+
+        return matchingList.Count == 2 && otherMatchingList.Count == 2;
     }
     
     private bool IsOnePair(Die[] dice)
     {
-        throw new NotImplementedException();
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+        
+        return matchingList.Count == 2;
     }
     
     private bool IsOneOfAKind(Die[] dice)
     {
-        throw new NotImplementedException();
+        var matchingList = dice.Where(die => die.CurrentFace == dice[0].CurrentFace).ToList();
+
+        return matchingList.Count <= 1;
     }
 }

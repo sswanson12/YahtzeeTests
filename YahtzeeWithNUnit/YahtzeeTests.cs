@@ -6,9 +6,9 @@ namespace YahtzeeWithNUnit;
 [TestFixture]
 public class YahtzeeTests
 {
-    public YahtzeeGame Setup()
+    private static YahtzeeGame Setup()
     {
-        List<Player> players = new List<Player>();
+        var players = new List<Player>();
         players.Add(new Player("TestPlayer1"));
         players.Add(new Player("TestPlayer2"));
 
